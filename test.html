@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Mini Loja</title>
+
+  <style>
+    /* === Sidebar (Carrinho Lateral) === */
+    .carrinho-lateral {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100vh;
+      background-color: #fff;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+      transition: right 0.3s ease-in-out;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .carrinho-lateral.active {
+      right: 0;
+    }
+
+    .carrinho-lateral-cabecalho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .carrinho-lateral-corpo {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .carrinho-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+    }
+
+    .carrinho-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .carrinho-lateral-rodape {
+      border-top: 1px solid #eee;
+      padding: 1rem;
+      background: #fafafa;
+    }
+
+    .carrinho-lateral-finalizar-compra a {
+      display: block;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+
+    .carrinho-lateral-finalizar-compra a:hover {
+      background-color: #0056b3;
+    }
+
+    .carrinho-lateral-continuar-comprando {
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 1040;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="http://www.unisantos.br/wp-content/uploads/2018/06/unisantos-vertical-azul.jpg" width="40" height="50">
+        IHC
+      </a>
+      <button id="abrir-carrinho" class="btn btn-outline-primary">🛒 Carrinho</button>
+    </div>
+  </nav>
+
+  <!-- Produtos -->
+  <main class="container py-4">
+    <div class="row g-3" id="produtos">
+
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+          <img src="https://images.tcdn.com.br/img/img_prod/1349542/gloss_labial_fairy_glitz_luluca_by_mely_rrl6411_1_20251025125237_235884705330.png" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Gloss Labial Fairy Glitz Luluca</h5>
+            <p class="card-text preco">22.90</p>
+            <button class="btn btn-primary comprar">Comprar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+          <img src="https://images.tcdn.com.br/img/img_prod/1349542/paleta_de_sombras_niina_secrets_neutrals_8_cores_1_20251101110219_a1ce8a7594c5.png" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Paleta de Sombras Niina Secrets</h5>
+            <p class="card-text preco">126.90</p>
+            <button class="btn btn-primary comprar">Comprar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+          <img src="https://images.tcdn.com.br/img/img_prod/1349542/blush_retinol_marrom_apimentado_2_20251103125632_beb9685f6515.jpg" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Blush Retinol Marrom Apimentado</h5>
+            <p class="card-text preco">41.90</p>
+            <button class="btn btn-primary comprar">Comprar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Carrinho lateral -->
+  <div class="carrinho-lateral">
+    <div class="carrinho-lateral-cabecalho">
+      <h3>Meu Carrinho</h3>
+      <div class="carrinho-lateral-fechar" style="cursor:pointer;">&times;</div>
+    </div>
+
+    <div class="carrinho-lateral-corpo" id="carrinho-itens">
+      <p>Carrinho Vazio</p>
+    </div>
+
+    <div class="carrinho-lateral-rodape">
+      <div class="carrinho-lateral-total-produtos">Itens: <span id="total-itens">0</span></div>
+      <div class="carrinho-lateral-total-valor">Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
+      <div class="carrinho-lateral-finalizar-compra">
+        <a href="#">Finalizar Compra</a>
+      </div>
+      <div class="carrinho-lateral-continuar-comprando">← Continuar Comprando</div>
+    </div>
+  </div>
+
+  <script>
+    // Elementos principais
+    const carrinho = document.querySelector('.carrinho-lateral');
+    const overlay = document.querySelector('.overlay');
+    const abrirCarrinho = document.getElementById('abrir-carrinho');
+    const fecharCarrinho = document.querySelector('.carrinho-lateral-fechar');
+    const continuar = document.querySelector('.carrinho-lateral-continuar-comprando');
+    const listaCarrinho = document.getElementById('carrinho-itens');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalItensEl = document.getElementById('total-itens');
+
+    let carrinhoItens = [];
+
+    // Funções de abrir/fechar
+    function abrir() {
+      carrinho.classList.add('active');
+      overlay.classList.add('active');
+    }
+
+    function fechar() {
+      carrinho.classList.remove('active');
+      overlay.classList.remove('active');
+    }
+
+    abrirCarrinho.addEventListener('click', abrir);
+    fecharCarrinho.addEventListener('click', fechar);
+    continuar.addEventListener('click', fechar);
+    overlay.addEventListener('click', fechar);
+
+    // Função para atualizar o carrinho
+    function atualizarCarrinho() {
+      listaCarrinho.innerHTML = '';
+
+      if (carrinhoItens.length === 0) {
+        listaCarrinho.innerHTML = '<p>Carrinho Vazio</p>';
+      } else {
+        carrinhoItens.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('carrinho-item');
+          div.innerHTML = `
+            <img src="${item.img}">
+            <div>
+              <p class="m-0"><strong>${item.nome}</strong></p>
+              <small>R$ ${item.preco.toFixed(2)}</small>
+            </div>
+            <button class="btn btn-sm btn-danger remover">X</button>
+          `;
+          listaCarrinho.appendChild(div);
+
+          // Remover item
+          div.querySelector('.remover').addEventListener('click', () => {
+            carrinhoItens = carrinhoItens.filter(i => i !== item);
+            atualizarCarrinho();
+          });
+        });
+      }
+
+      // Atualiza subtotal e contador
+      const subtotal = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
+      subtotalEl.textContent = `R$ ${subtotal.toFixed(2)}`;
+      totalItensEl.textContent = carrinhoItens.length;
+    }
+
+    // Função de adicionar produto
+    document.querySelectorAll('.comprar').forEach(botao => {
+      botao.addEventListener('click', e => {
+        const card = e.target.closest('.card');
+        const nome = card.querySelector('.card-title').textContent;
+        const preco = parseFloat(card.querySelector('.preco').textContent);
+        const img = card.querySelector('img').src;
+
+        carrinhoItens.push({ nome, preco, img });
+        atualizarCarrinho();
+        abrir();
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="source/icon_16x16.jpg" sizes="16x16" type="image/jpg">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <title>Sphynx Beauty Store</title>
+        <style>
+            body {
+                background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 100%);
+                min-height: 100vh;
+                transition: background 0.3s ease;
+            }
+
+            body.dark-mode {
+                background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%);
+            }
+
+            .navbar {
+                background: linear-gradient(90deg, #ff6ec4 0%, #7873f5 100%) !important;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                transition: background 0.3s ease;
+            }
+
+            body.dark-mode .navbar {
+                background: linear-gradient(90deg, #c2185b 0%, #880e4f 100%) !important;
+            }
+
+            .navbar-brand,
+            .navbar-brand:hover {
+                color: white !important;
+                font-weight: bold;
+            }
+
+            #abrir-carrinho {
+                background: white;
+                color: #7873f5;
+                border: 2px solid white;
+                font-weight: bold;
+                margin-left: 10px;
+                position: relative;
+                padding: 8px 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            #abrir-carrinho:hover {
+                background: #7873f5;
+                color: white;
+                border: 2px solid white;
+            }
+
+            body.dark-mode #abrir-carrinho {
+                background: #1a1a2e;
+                color: #ff6ec4;
+                border: 2px solid #ff6ec4;
+            }
+
+            body.dark-mode #abrir-carrinho:hover {
+                background: #ff6ec4;
+                color: #1a1a2e;
+            }
+
+            /* Ícone SVG do Carrinho */
+            .cart-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .cart-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: #ff4757;
+                color: white;
+                border-radius: 50%;
+                width: 22px;
+                height: 22px;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.75rem;
+                font-weight: bold;
+            }
+
+            .cart-badge.show {
+                display: flex;
+            }
+
+            /* Switch Dark Mode */
+            .theme-switch-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .theme-switch {
+                display: inline-block;
+                height: 28px;
+                position: relative;
+                width: 50px;
+            }
+
+            .theme-switch input {
+                display: none;
+            }
+
+            .slider {
+                background-color: white;
+                bottom: 0;
+                cursor: pointer;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                transition: 0.4s;
+                border-radius: 34px;
+            }
+
+            .slider:before {
+                background-color: #7873f5;
+                bottom: 4px;
+                content: "";
+                height: 20px;
+                left: 4px;
+                position: absolute;
+                transition: 0.4s;
+                width: 20px;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #1a1a2e;
+            }
+
+            input:checked + .slider:before {
+                background-color: #ff6ec4;
+                transform: translateX(22px);
+            }
+
+            .theme-label {
+                color: white;
+                font-weight: bold;
+                font-size: 0.9rem;
+            }
+
+            .card {
+                border: 4px solid rgba(120, 115, 245, 0.6);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+                overflow: hidden;
+                background: linear-gradient(135deg, #f5e6f0 0%, #e8e3f5 100%);
+            }
+
+            body.dark-mode .card {
+                background: linear-gradient(135deg, #4a1942 0%, #2d0a2e 100%);
+                border-color: rgba(255, 110, 196, 0.8);
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                border-color: rgba(120, 115, 245, 0.9);
+            }
+
+            body.dark-mode .card:hover {
+                border-color: rgba(255, 110, 196, 1);
+            }
+
+            .card-img-top {
+                border: 3px solid rgba(120, 115, 245, 0.5);
+                border-radius: 0;
+                padding: 5px;
+                background: white;
+                transition: border-color 0.3s ease;
+            }
+
+            body.dark-mode .card-img-top {
+                border-color: rgba(255, 110, 196, 0.7);
+                background: #1a0a1a;
+            }
+
+            .card-body {
+                background: linear-gradient(135deg, #f5e6f0 0%, #e8e3f5 100%);
+                transition: background 0.3s ease;
+            }
+
+            body.dark-mode .card-body {
+                background: linear-gradient(135deg, #4a1942 0%, #2d0a2e 100%);
+            }
+
+            .card-title {
+                color: #7873f5;
+                font-weight: bold;
+                transition: color 0.3s ease;
+            }
+
+            body.dark-mode .card-title {
+                color: #ff99cc;
+            }
+
+            .preco {
+                font-size: 1.5rem;
+                font-weight: bold;
+                background: linear-gradient(90deg, #ff6ec4 0%, #7873f5 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            body.dark-mode .preco {
+                background: linear-gradient(90deg, #ff6ec4 0%, #ffb3d9 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .btn-primary {
+                background: linear-gradient(90deg, #ff6ec4 0%, #7873f5 100%);
+                border: none;
+                font-weight: bold;
+            }
+
+            .btn-primary:hover {
+                background: linear-gradient(90deg, #7873f5 0%, #ff6ec4 100%);
+                transform: scale(1.05);
+            }
+
+            body.dark-mode .btn-primary {
+                background: linear-gradient(90deg, #c2185b 0%, #880e4f 100%);
+            }
+
+            body.dark-mode .btn-primary:hover {
+                background: linear-gradient(90deg, #ff6ec4 0%, #ff99cc 100%);
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: none;
+                z-index: 999;
+            }
+
+            body.dark-mode .overlay {
+                background: rgba(0, 0, 0, 0.8);
+            }
+
+            .overlay.active {
+                display: block;
+            }
+
+            .carrinho-lateral {
+                position: fixed;
+                top: 0;
+                right: -400px;
+                width: 400px;
+                height: 100%;
+                background: linear-gradient(180deg, #ff6ec4 0%, #7873f5 100%);
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+                transition: right 0.3s ease, background 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                color: white;
+            }
+
+            body.dark-mode .carrinho-lateral {
+                background: linear-gradient(180deg, #c2185b 0%, #880e4f 100%);
+            }
+
+            .carrinho-lateral.active {
+                right: 0;
+            }
+
+            .carrinho-lateral-cabecalho {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .carrinho-lateral-cabecalho h3 {
+                color: white;
+                margin: 0;
+            }
+
+            .carrinho-lateral-fechar {
+                font-size: 30px;
+                cursor: pointer;
+                color: white;
+            }
+
+            .carrinho-lateral-fechar:hover {
+                color: #ffe0f0;
+            }
+
+            .carrinho-lateral-corpo {
+                flex: 1;
+                padding: 20px;
+                overflow-y: auto;
+            }
+
+            .carrinho-item {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+
+            body.dark-mode .carrinho-item {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .carrinho-item img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                border-radius: 5px;
+                border: 2px solid rgba(120, 115, 245, 0.6);
+            }
+
+            body.dark-mode .carrinho-item img {
+                border-color: rgba(255, 110, 196, 0.8);
+            }
+
+            .carrinho-item p,
+            .carrinho-item small {
+                color: white;
+            }
+
+            .carrinho-lateral-rodape {
+                padding: 20px;
+                border-top: 2px solid rgba(255, 255, 255, 0.3);
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            body.dark-mode .carrinho-lateral-rodape {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            .carrinho-lateral-total-produtos,
+            .carrinho-lateral-total-valor {
+                margin-bottom: 10px;
+                color: white;
+                font-size: 1.1rem;
+            }
+
+            .carrinho-lateral-finalizar-compra {
+                margin: 15px 0;
+            }
+
+            .carrinho-lateral-finalizar-compra a {
+                display: block;
+                background: white;
+                color: #7873f5;
+                text-align: center;
+                padding: 12px;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+            body.dark-mode .carrinho-lateral-finalizar-compra a {
+                background: #1a1a2e;
+                color: #ff6ec4;
+            }
+
+            .carrinho-lateral-finalizar-compra a:hover {
+                background: #ffe0f0;
+                transform: scale(1.05);
+            }
+
+            body.dark-mode .carrinho-lateral-finalizar-compra a:hover {
+                background: #ff6ec4;
+                color: #1a1a2e;
+            }
+
+            .carrinho-lateral-continuar-comprando {
+                text-align: center;
+                cursor: pointer;
+                color: white;
+                font-weight: bold;
+            }
+
+            .carrinho-lateral-continuar-comprando:hover {
+                color: #ffe0f0;
+            }
+
+            .btn-danger {
+                background: #ff4757;
+                border: none;
+            }
+
+            .btn-danger:hover {
+                background: #ff6b81;
+            }
+
+            body.dark-mode .btn-danger {
+                background: #c1121f;
+            }
+
+            body.dark-mode .btn-danger:hover {
+                background: #ff4757;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://www.unisantos.br/wp-content/themes/tema-unisantos/images/unisantos-vertical.png" width="40" height="50">
+                    IHC
+                </a>
+                <a class="navbar-brand">Sphynx Beauty Store</a>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="theme-switch-wrapper">
+                        <span class="theme-label">Light</span>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="toggle-dark-mode">
+                            <div class="slider"></div>
+                        </label>
+                        <span class="theme-label">Dark</span>
+                    </div>
+                    <button id="abrir-carrinho" class="btn btn-outline-primary">
+                        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 18C5.9 18 5.01 18.9 5.01 20C5.01 21.1 5.9 22 7 22C8.1 22 9 21.1 9 20C9 18.9 8.1 18 7 18ZM1 2V4H3L6.6 11.59L5.25 14.04C5.09 14.32 5 14.65 5 15C5 16.1 5.9 17 7 17H19V15H7.42C7.28 15 7.17 14.89 7.17 14.75L7.2 14.63L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L20.88 5.48C20.96 5.34 21 5.17 21 5C21 4.45 20.55 4 20 4H5.21L4.27 2H1ZM17 18C15.9 18 15.01 18.9 15.01 20C15.01 21.1 15.9 22 17 22C18.1 22 19 21.1 19 20C19 18.9 18.1 18 17 18Z" fill="currentColor"/>
+                        </svg>
+                        <span>Carrinho</span>
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="container py-4">   
+            
+            <div class="row g-3" id="produtos">
+
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.tcdn.com.br/img/img_prod/1349542/gloss_labial_fairy_glitz_luluca_by_mely_rrl6411_1_20251025125237_235884705330.png" class="card-img-top" alt="Gato">
+                        <div class="card-body">
+                        <h5 class="card-title">Gloss Labial Fairy Glitz Luluca By Mely Rrl6411</h5>
+                        <p class="card-text preco">R$ 22.90</p>
+                        <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.tcdn.com.br/img/img_prod/1349542/paleta_de_sombras_niina_secrets_neutrals_8_cores_1_20251101110219_a1ce8a7594c5.png" class="card-img-top" alt="Gato">
+                        <div class="card-body">
+                        <h5 class="card-title">Paleta de Sombras Niina Secrets Neutrals 8 Cores</h5>
+                        <p class="card-text preco">R$ 126.90</p>
+                        <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.tcdn.com.br/img/img_prod/1349542/kit_duo_leo_multifenomenal_aura_beauty_afrodite_ga_1_20251025104224_5fc7926f56bb.png" class="card-img-top" alt="Gato">
+                        <div class="card-body">
+                        <h5 class="card-title">Kit Duo Óleo Multi Fenomenal Aura Beauty Afrodite Garden</h5>
+                        <p class="card-text preco">R$ 208.90</p>
+                        <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.tcdn.com.br/img/img_prod/1349542/blush_retinol_marrom_apimentado_2_20251103125632_beb9685f6515.jpg" class="card-img-top" alt="Gato">
+                        <div class="card-body">
+                        <h5 class="card-title">Blush Retinol Marrom Apimentado Payot</h5>
+                        <p class="card-text preco">R$ 41.90</p>
+                        <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/p_compacto_matte_max_love_vegano_cor_47_1_20251007121100_84a521141ed3.jpg" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Pó Compacto Matte Max Love Vegano Cor 47</h5>
+                            <p class="card-text preco">R$ 7.95</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </main>
+
+        <div class="overlay"></div>
+
+        <div class="carrinho-lateral">
+
+            <div class="carrinho-lateral-cabecalho">
+                <h3>Meu Carrinho</h3>
+                <div class="carrinho-lateral-fechar">&times;</div>
+            </div>
+        
+            <div class="carrinho-lateral-corpo" id="carrinho-itens">
+                <p>Carrinho Vazio</p>
+            </div>
+        
+            <div class="carrinho-lateral-rodape">
+                <div class="carrinho-lateral-total-produtos">Itens: <span id="total-itens">0</span></div>
+                <div class="carrinho-lateral-total-valor">Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
+                <div class="carrinho-lateral-finalizar-compra">
+                  <a href="#">Finalizar Compra</a>
+                </div>
+                <div class="carrinho-lateral-continuar-comprando">← Continuar Comprando</div>
+            </div>
+        </div>
+
+        <script>
+            const carrinho = document.querySelector('.carrinho-lateral');
+            const overlay = document.querySelector('.overlay');
+            const abrirCarrinho = document.getElementById('abrir-carrinho');
+            const fecharCarrinho = document.querySelector('.carrinho-lateral-fechar');
+            const continuar = document.querySelector('.carrinho-lateral-continuar-comprando');
+            const listaCarrinho = document.getElementById('carrinho-itens');
+            const subtotalEl = document.getElementById('subtotal');
+            const totalItensEl = document.getElementById('total-itens');
+            const cartBadge = document.getElementById('cart-badge');
+            const toggleDarkMode = document.getElementById('toggle-dark-mode');
+
+            let carrinhoItens = [];
+
+            // Dark Mode Toggle
+            toggleDarkMode.addEventListener('change', () => {
+                if (toggleDarkMode.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                toggleDarkMode.checked = true;
+            }
+
+            function abrir() {
+                carrinho.classList.add('active');
+                overlay.classList.add('active');
+            }
+
+            function fechar() {
+                carrinho.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+
+            abrirCarrinho.addEventListener('click', abrir);
+            fecharCarrinho.addEventListener('click', fechar);
+            continuar.addEventListener('click', fechar);
+            overlay.addEventListener('click', fechar);
+
+            function atualizarCarrinho() {
+                listaCarrinho.innerHTML = '';
+
+                if (carrinhoItens.length === 0) {
+                    listaCarrinho.innerHTML = '<p>Carrinho Vazio</p>';
+                    cartBadge.classList.remove('show');
+                } else {
+                    cartBadge.classList.add('show');
+                    cartBadge.textContent = carrinhoItens.length;
+
+                    carrinhoItens.forEach(item => {
+                        const div = document.createElement('div');
+                        div.classList.add('carrinho-item');
+                        div.innerHTML = `
+                            <img src="${item.img}">
+                            <div>
+                                <p class="m-0"><strong>${item.nome}</strong></p>
+                                <small>R$ ${item.preco.toFixed(2)}</small>
+                            </div>
+                            <button class="btn btn-sm btn-danger remover">X</button>
+                        `;
+                        listaCarrinho.appendChild(div);
+
+                        div.querySelector('.remover').addEventListener('click', () => {
+                            carrinhoItens = carrinhoItens.filter(i => i !== item);
+                            atualizarCarrinho();
+                        });
+                    });
+                }
+
+                const subtotal = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
+                subtotalEl.textContent = `R$ ${subtotal.toFixed(2)}`;
+                totalItensEl.textContent = carrinhoItens.length;
+            }
+
+            document.querySelectorAll('.comprar').forEach(botao => {
+                botao.addEventListener('click', e => {
+                    const card = e.target.closest('.card');
+                    const nome = card.querySelector('.card-title').textContent;
+                    const precoTexto = card.querySelector('.preco').textContent;
+                    const preco = parseFloat(precoTexto.replace('R$', '').trim());
+                    const img = card.querySelector('img').src;
+
+                    carrinhoItens.push({ nome, preco, img });
+                    atualizarCarrinho();
+                    abrir();
+                });
+            });
+        </script>
+
+    </body>
+</html>

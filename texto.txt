@@ -1,0 +1,11 @@
+slide - nome dos integrantes, link github do trabalho, conteudo a ser apresentado(resumo)
+
+linkar duas diretrizes e principios de ihc - do figma 
+
+justificar o que fez e o porque , identificar publico alvo
+Identificar o usuário ou público-alvo da interface e seu contexto de uso;
+
+
+ Apresentar e explicar o processo de design utilizado, justificando sua escolha;
+
+interface responsiva e acessivel
