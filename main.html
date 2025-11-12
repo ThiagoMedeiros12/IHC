@@ -154,6 +154,10 @@
                 transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
                 overflow: hidden;
                 background: linear-gradient(135deg, #f5e6f0 0%, #e8e3f5 100%);
+                width: 18rem !important;
+                height: 450px;
+                display: flex;
+                flex-direction: column;
             }
 
             body.dark-mode .card {
@@ -177,6 +181,8 @@
                 padding: 5px;
                 background: white;
                 transition: border-color 0.3s ease;
+                height: 200px;
+                object-fit: contain;
             }
 
             body.dark-mode .card-img-top {
@@ -187,6 +193,10 @@
             .card-body {
                 background: linear-gradient(135deg, #f5e6f0 0%, #e8e3f5 100%);
                 transition: background 0.3s ease;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
 
             body.dark-mode .card-body {
@@ -197,6 +207,8 @@
                 color: #7873f5;
                 font-weight: bold;
                 transition: color 0.3s ease;
+                min-height: 48px;
+                line-height: 1.2;
             }
 
             body.dark-mode .card-title {
@@ -341,6 +353,57 @@
                 color: white;
             }
 
+            .carrinho-item-info {
+                flex: 1;
+            }
+
+            .quantidade-controle {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 5px;
+                padding: 4px;
+            }
+
+            body.dark-mode .quantidade-controle {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .quantidade-controle button {
+                background: white;
+                color: #7873f5;
+                border: none;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            body.dark-mode .quantidade-controle button {
+                background: #ff6ec4;
+                color: white;
+            }
+
+            .quantidade-controle button:hover {
+                transform: scale(1.1);
+                background: #7873f5;
+                color: white;
+            }
+
+            body.dark-mode .quantidade-controle button:hover {
+                background: #ff99cc;
+            }
+
+            .quantidade-controle span {
+                color: white;
+                font-weight: bold;
+                min-width: 20px;
+                text-align: center;
+            }
+
             .carrinho-lateral-rodape {
                 padding: 20px;
                 border-top: 2px solid rgba(255, 255, 255, 0.3);
@@ -415,6 +478,279 @@
 
             body.dark-mode .btn-danger:hover {
                 background: #ff4757;
+            }
+
+            /* Modal de Confirmação */
+            .modal-confirmacao {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 1001;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-confirmacao.active {
+                display: flex;
+            }
+
+            .modal-confirmacao-conteudo {
+                background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+                padding: 30px;
+                border-radius: 15px;
+                max-width: 600px;
+                width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                animation: slideDown 0.3s ease;
+            }
+
+            body.dark-mode .modal-confirmacao-conteudo {
+                background: linear-gradient(135deg, #2d0a2e 0%, #1a0a1a 100%);
+            }
+
+            @keyframes slideDown {
+                from {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .modal-confirmacao-cabecalho {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #7873f5;
+                padding-bottom: 15px;
+            }
+
+            body.dark-mode .modal-confirmacao-cabecalho {
+                border-bottom-color: #ff6ec4;
+            }
+
+            .modal-confirmacao-cabecalho h3 {
+                color: #7873f5;
+                margin: 0;
+                font-weight: bold;
+            }
+
+            body.dark-mode .modal-confirmacao-cabecalho h3 {
+                color: #ff99cc;
+            }
+
+            .modal-confirmacao-fechar {
+                font-size: 30px;
+                cursor: pointer;
+                color: #7873f5;
+            }
+
+            body.dark-mode .modal-confirmacao-fechar {
+                color: #ff6ec4;
+            }
+
+            .modal-confirmacao-fechar:hover {
+                color: #ff6ec4;
+            }
+
+            .modal-confirmacao-produtos {
+                margin-bottom: 20px;
+            }
+
+            .modal-produto-item {
+                display: flex;
+                gap: 15px;
+                padding: 10px;
+                border-bottom: 1px solid rgba(120, 115, 245, 0.3);
+                margin-bottom: 10px;
+            }
+
+            body.dark-mode .modal-produto-item {
+                border-bottom-color: rgba(255, 110, 196, 0.3);
+            }
+
+            .modal-produto-item img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 2px solid #7873f5;
+            }
+
+            body.dark-mode .modal-produto-item img {
+                border-color: #ff6ec4;
+            }
+
+            .modal-produto-info {
+                flex: 1;
+            }
+
+            .modal-produto-info h6 {
+                color: #7873f5;
+                margin: 0 0 5px 0;
+                font-weight: bold;
+            }
+
+            body.dark-mode .modal-produto-info h6 {
+                color: #ff99cc;
+            }
+
+            .modal-produto-info p {
+                margin: 0;
+                color: #333;
+                font-weight: bold;
+            }
+
+            body.dark-mode .modal-produto-info p {
+                color: #fff;
+            }
+
+            .modal-confirmacao-resumo {
+                background: linear-gradient(135deg, #f5e6f0 0%, #e8e3f5 100%);
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            body.dark-mode .modal-confirmacao-resumo {
+                background: linear-gradient(135deg, #4a1942 0%, #2d0a2e 100%);
+            }
+
+            .modal-confirmacao-resumo div {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+                color: #333;
+            }
+
+            body.dark-mode .modal-confirmacao-resumo div {
+                color: #fff;
+            }
+
+            .modal-confirmacao-resumo .total {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #7873f5;
+                border-top: 2px solid #7873f5;
+                padding-top: 10px;
+                margin-top: 10px;
+            }
+
+            body.dark-mode .modal-confirmacao-resumo .total {
+                color: #ff99cc;
+                border-top-color: #ff6ec4;
+            }
+
+            .modal-confirmacao-pagamento h5 {
+                color: #7873f5;
+                margin-bottom: 15px;
+                font-weight: bold;
+            }
+
+            body.dark-mode .modal-confirmacao-pagamento h5 {
+                color: #ff99cc;
+            }
+
+            .metodo-pagamento {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                margin-bottom: 10px;
+                border: 2px solid #fc6f8d;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                background: white;
+                color: #333;
+            }
+
+            body.dark-mode .metodo-pagamento {
+                border-color: #d4487a;
+                background: #1a0a1a;
+                color: #fff;
+            }
+
+            .metodo-pagamento:hover {
+                background: rgba(252, 111, 141, 0.1);
+                transform: translateX(5px);
+            }
+
+            body.dark-mode .metodo-pagamento:hover {
+                background: rgba(212, 72, 122, 0.2);
+            }
+
+            .metodo-pagamento.selecionado {
+                background: linear-gradient(90deg, #fc6f8d 0%, #7873f5 100%);
+                color: white;
+            }
+
+            body.dark-mode .metodo-pagamento.selecionado {
+                background: linear-gradient(90deg, #d4487a 0%, #5a3b8f 100%);
+                color: white;
+            }
+
+            .metodo-pagamento input {
+                margin-right: 10px;
+            }
+
+            .metodo-pagamento label {
+                cursor: pointer;
+                margin: 0;
+                flex: 1;
+                font-weight: bold;
+                color: inherit;
+            }
+
+            .modal-confirmacao-botoes {
+                display: flex;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .modal-confirmacao-botoes button {
+                flex: 1;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn-confirmar-compra {
+                background: linear-gradient(90deg, #ff6ec4 0%, #7873f5 100%);
+                color: white;
+            }
+
+            .btn-confirmar-compra:hover {
+                transform: scale(1.05);
+            }
+
+            body.dark-mode .btn-confirmar-compra {
+                background: linear-gradient(90deg, #c2185b 0%, #880e4f 100%);
+            }
+
+            .btn-cancelar-compra {
+                background: #ccc;
+                color: #333;
+            }
+
+            .btn-cancelar-compra:hover {
+                background: #999;
+            }
+
+            body.dark-mode .btn-cancelar-compra {
+                background: #444;
+                color: #fff;
             }
         </style>
     </head>
@@ -501,6 +837,76 @@
                         </div>
                     </div>
                 </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/bt_cushion_glow_pearly_1_20251025130351_2152974f8259.png" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Bt Cushion Glow Pearly</h5>
+                            <p class="card-text preco">R$ 59.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/base_alta_cobertura_max_love_cor_605_2_20251007120135_063b59148dc4.jpg" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Base Alta Cobertura Max Love Cor 605</h5>
+                            <p class="card-text preco">R$ 12.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/iluminador_melu_marble_hb_f860_1_9995_1_b9bfd8ad757e390cbe5e6e6167a46ae5.jpg" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Iluminador Cremoso Melu Marble Glow Beach Sunset</h5>
+                            <p class="card-text preco">R$ 13.95</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/bronzer_mascavo_summer_glow_sunset_8g_by_mari_saad_10179_2_9ce31831e049cffe1ed2c7088c305864.png" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Pó Bronzeador Mascavo Summer Glow Sunset</h5>
+                            <p class="card-text preco">R$ 95.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/base_retinol_payot_45_9961_1_466c8a83bef7475b89f8ca0d3347403a.png" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Base Retinol Payot 35ml Cor 25</h5>
+                            <p class="card-text preco">R$ 79.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/po_banana_bella_bem_me_quero_4369_1_44ebd787c21e8d4903c7ebbf705c5e8d.png" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Pó Banana Bella Bem Me Quero</h5>
+                            <p class="card-text preco">R$ 12.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                            <img src="https://images.tcdn.com.br/img/img_prod/1349542/mascara_de_cilios_payot_5_em_1_volume_9949_1_e30fa2000320386e9ff64b4216d184ec.png" class="card-img-top" alt="Gato">
+                            <div class="card-body">
+                            <h5 class="card-title">Máscara de Cílios Payot 5 Em 1 Volume</h5>
+                            <p class="card-text preco">R$ 49.90</p>
+                            <button class="btn btn-primary comprar">Comprar</button>
+                        </div>
+                    </div>
+                </div>        
             </div>
         </main>
 
@@ -521,9 +927,63 @@
                 <div class="carrinho-lateral-total-produtos">Itens: <span id="total-itens">0</span></div>
                 <div class="carrinho-lateral-total-valor">Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
                 <div class="carrinho-lateral-finalizar-compra">
-                  <a href="#">Finalizar Compra</a>
+                  <a href="#" id="btn-finalizar-compra">Finalizar Compra</a>
                 </div>
                 <div class="carrinho-lateral-continuar-comprando">← Continuar Comprando</div>
+            </div>
+        </div>
+
+        <!-- Modal de Confirmação -->
+        <div class="modal-confirmacao" id="modal-confirmacao">
+            <div class="modal-confirmacao-conteudo">
+                <div class="modal-confirmacao-cabecalho">
+                    <h3>Confirmação de Compra</h3>
+                    <div class="modal-confirmacao-fechar" id="fechar-modal">&times;</div>
+                </div>
+
+                <div class="modal-confirmacao-produtos" id="modal-produtos-lista">
+                    <!-- Produtos serão inseridos aqui -->
+                </div>
+
+                <div class="modal-confirmacao-resumo">
+                    <div>
+                        <span>Subtotal:</span>
+                        <span id="modal-subtotal">R$ 0,00</span>
+                    </div>
+                    <div>
+                        <span>Frete:</span>
+                        <span>Grátis</span>
+                    </div>
+                    <div class="total">
+                        <span>Total:</span>
+                        <span id="modal-total">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <div class="modal-confirmacao-pagamento">
+                    <h5>Método de Pagamento</h5>
+                    <div class="metodo-pagamento" data-metodo="pix">
+                        <input type="radio" name="pagamento" id="pix" value="pix">
+                        <label for="pix">💳 PIX</label>
+                    </div>
+                    <div class="metodo-pagamento" data-metodo="credito">
+                        <input type="radio" name="pagamento" id="credito" value="credito">
+                        <label for="credito">💳 Cartão de Crédito</label>
+                    </div>
+                    <div class="metodo-pagamento" data-metodo="debito">
+                        <input type="radio" name="pagamento" id="debito" value="debito">
+                        <label for="debito">💳 Cartão de Débito</label>
+                    </div>
+                    <div class="metodo-pagamento" data-metodo="boleto">
+                        <input type="radio" name="pagamento" id="boleto" value="boleto">
+                        <label for="boleto">📄 Boleto Bancário</label>
+                    </div>
+                </div>
+
+                <div class="modal-confirmacao-botoes">
+                    <button class="btn-cancelar-compra" id="btn-cancelar">Cancelar</button>
+                    <button class="btn-confirmar-compra" id="btn-confirmar">Confirmar Compra</button>
+                </div>
             </div>
         </div>
 
@@ -538,6 +998,16 @@
             const totalItensEl = document.getElementById('total-itens');
             const cartBadge = document.getElementById('cart-badge');
             const toggleDarkMode = document.getElementById('toggle-dark-mode');
+
+            // Elementos do modal
+            const modalConfirmacao = document.getElementById('modal-confirmacao');
+            const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
+            const fecharModal = document.getElementById('fechar-modal');
+            const btnCancelar = document.getElementById('btn-cancelar');
+            const btnConfirmar = document.getElementById('btn-confirmar');
+            const modalProdutosLista = document.getElementById('modal-produtos-lista');
+            const modalSubtotal = document.getElementById('modal-subtotal');
+            const modalTotal = document.getElementById('modal-total');
 
             let carrinhoItens = [];
 
@@ -568,10 +1038,96 @@
                 overlay.classList.remove('active');
             }
 
+            function abrirModal() {
+                if (carrinhoItens.length === 0) {
+                    alert('Seu carrinho está vazio!');
+                    return;
+                }
+
+                // Preencher produtos no modal
+                modalProdutosLista.innerHTML = '';
+                carrinhoItens.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('modal-produto-item');
+                    div.innerHTML = `
+                        <img src="${item.img}" alt="${item.nome}">
+                        <div class="modal-produto-info">
+                            <h6>${item.nome}</h6>
+                            <p>R$ ${item.preco.toFixed(2)} x ${item.quantidade} = R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
+                        </div>
+                    `;
+                    modalProdutosLista.appendChild(div);
+                });
+
+                // Calcular totais
+                const subtotal = carrinhoItens.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                modalSubtotal.textContent = `R$ ${subtotal.toFixed(2)}`;
+                modalTotal.textContent = `R$ ${subtotal.toFixed(2)}`;
+
+                modalConfirmacao.classList.add('active');
+                fechar(); // Fechar carrinho lateral
+            }
+
+            function fecharModalConfirmacao() {
+                modalConfirmacao.classList.remove('active');
+            }
+
+            // Seleção de método de pagamento
+            document.querySelectorAll('.metodo-pagamento').forEach(metodo => {
+                metodo.addEventListener('click', () => {
+                    document.querySelectorAll('.metodo-pagamento').forEach(m => m.classList.remove('selecionado'));
+                    metodo.classList.add('selecionado');
+                    metodo.querySelector('input').checked = true;
+                });
+            });
+
+            btnFinalizarCompra.addEventListener('click', (e) => {
+                e.preventDefault();
+                abrirModal();
+            });
+
+            fecharModal.addEventListener('click', fecharModalConfirmacao);
+            btnCancelar.addEventListener('click', fecharModalConfirmacao);
+
+            btnConfirmar.addEventListener('click', () => {
+                const metodoPagamento = document.querySelector('input[name="pagamento"]:checked');
+                
+                if (!metodoPagamento) {
+                    alert('Por favor, selecione um método de pagamento!');
+                    return;
+                }
+
+                alert(`Compra confirmada! Método de pagamento: ${metodoPagamento.value.toUpperCase()}\nTotal: ${modalTotal.textContent}`);
+                
+                // Limpar carrinho
+                carrinhoItens = [];
+                atualizarCarrinho();
+                fecharModalConfirmacao();
+            });
+
             abrirCarrinho.addEventListener('click', abrir);
             fecharCarrinho.addEventListener('click', fechar);
             continuar.addEventListener('click', fechar);
             overlay.addEventListener('click', fechar);
+
+            function aumentarQuantidade(item) {
+                item.quantidade++;
+                atualizarCarrinho();
+            }
+
+            function diminuirQuantidade(item) {
+                if (item.quantidade > 1) {
+                    item.quantidade--;
+                } else {
+                    carrinhoItens = carrinhoItens.filter(i => i !== item);
+                }
+                atualizarCarrinho();
+            }
+
+            function removerItem(item) {
+                carrinhoItens = carrinhoItens.filter(i => i !== item);
+                atualizarCarrinho();
+            }
 
             function atualizarCarrinho() {
                 listaCarrinho.innerHTML = '';
@@ -580,32 +1136,38 @@
                     listaCarrinho.innerHTML = '<p>Carrinho Vazio</p>';
                     cartBadge.classList.remove('show');
                 } else {
+                    const totalItens = carrinhoItens.reduce((acc, item) => acc + item.quantidade, 0);
                     cartBadge.classList.add('show');
-                    cartBadge.textContent = carrinhoItens.length;
+                    cartBadge.textContent = totalItens;
 
                     carrinhoItens.forEach(item => {
                         const div = document.createElement('div');
                         div.classList.add('carrinho-item');
                         div.innerHTML = `
                             <img src="${item.img}">
-                            <div>
+                            <div class="carrinho-item-info">
                                 <p class="m-0"><strong>${item.nome}</strong></p>
                                 <small>R$ ${item.preco.toFixed(2)}</small>
+                                <div class="quantidade-controle mt-2">
+                                    <button class="btn-diminuir">-</button>
+                                    <span>${item.quantidade}</span>
+                                    <button class="btn-aumentar">+</button>
+                                </div>
                             </div>
                             <button class="btn btn-sm btn-danger remover">X</button>
                         `;
                         listaCarrinho.appendChild(div);
 
-                        div.querySelector('.remover').addEventListener('click', () => {
-                            carrinhoItens = carrinhoItens.filter(i => i !== item);
-                            atualizarCarrinho();
-                        });
+                        div.querySelector('.btn-aumentar').addEventListener('click', () => aumentarQuantidade(item));
+                        div.querySelector('.btn-diminuir').addEventListener('click', () => diminuirQuantidade(item));
+                        div.querySelector('.remover').addEventListener('click', () => removerItem(item));
                     });
                 }
 
-                const subtotal = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
+                const subtotal = carrinhoItens.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                const totalItens = carrinhoItens.reduce((acc, item) => acc + item.quantidade, 0);
                 subtotalEl.textContent = `R$ ${subtotal.toFixed(2)}`;
-                totalItensEl.textContent = carrinhoItens.length;
+                totalItensEl.textContent = totalItens;
             }
 
             document.querySelectorAll('.comprar').forEach(botao => {
@@ -616,7 +1178,17 @@
                     const preco = parseFloat(precoTexto.replace('R$', '').trim());
                     const img = card.querySelector('img').src;
 
-                    carrinhoItens.push({ nome, preco, img });
+                    // Verifica se o produto já existe no carrinho
+                    const itemExistente = carrinhoItens.find(item => item.nome === nome);
+                    
+                    if (itemExistente) {
+                        // Se existir, aumenta a quantidade
+                        itemExistente.quantidade++;
+                    } else {
+                        // Se não existir, adiciona novo item com quantidade 1
+                        carrinhoItens.push({ nome, preco, img, quantidade: 1 });
+                    }
+
                     atualizarCarrinho();
                     abrir();
                 });
